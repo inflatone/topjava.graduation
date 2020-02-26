@@ -1,0 +1,47 @@
+GET http://localhost:8080/rest/account
+Accept: */*
+Cache-Control: no-cache
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+GET http://localhost:8080/rest/users
+Accept: */*
+Cache-Control: no-cache
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+POST http://localhost:8080/rest/users
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "email": "test@test.com",
+  "firstName": "Test",
+  "lastName": "Test",
+  "password": "test",
+  "roles": [ "ROLE_USER","ROLE_ADMIN"]
+}
+
+###
+
+PUT http://localhost:8080/rest/users/1
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "email": "user@gmail.com",
+  "firstName": "Very_New_First",
+  "lastName": "New_Last"
+}
+
+###
