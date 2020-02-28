@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.springframework.util.StringUtils;
+import ru.javaops.restaurantvoting.ValidationGroups;
 import ru.javaops.restaurantvoting.web.converter.JsonDeserializers;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -38,7 +40,8 @@ public class User extends BaseEntity implements Serializable {
     private String lastName;
 
     @Column(name = "password")
-    @Size(max = 256)
+    @NotBlank(groups = ValidationGroups.Persist.class)
+    @Size(min = 5, max = 256, groups = ValidationGroups.Persist.class)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)
     private String password;

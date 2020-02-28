@@ -27,6 +27,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'one.util:streamex:0.7.2'
 
 //	https://dzone.com/articles/spring-boot-2-with-junit-5-and-mockito-2-for-unit
 //	testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
