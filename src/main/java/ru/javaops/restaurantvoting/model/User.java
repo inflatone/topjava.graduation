@@ -3,6 +3,7 @@ package ru.javaops.restaurantvoting.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
+import org.springframework.util.StringUtils;
 import ru.javaops.restaurantvoting.web.converter.JsonDeserializers;
 
 import javax.persistence.*;
@@ -47,4 +48,8 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    public void setEmail(String email) {
+        this.email = StringUtils.isEmpty(email) ? null : email;
+    }
 }
