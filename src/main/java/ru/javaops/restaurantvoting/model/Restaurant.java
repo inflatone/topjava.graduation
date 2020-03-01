@@ -23,4 +23,8 @@ public class Restaurant extends BaseEntity {
     @OrderBy("date DESC")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<DailyMenu> dailyMenus;
+
+    public Restaurant(Integer id) {
+        super(id);
+    }
 }

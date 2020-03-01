@@ -51,7 +51,10 @@ Authorization: Basic admin@javaops.ru admin
   "firstName": "Test",
   "lastName": "Test",
   "password": "test",
-  "roles": [ "ROLE_USER","ROLE_ADMIN"]
+  "roles": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
 }
 
 ###
@@ -70,3 +73,96 @@ Authorization: Basic user@gmail.com password
 
 ###
 
+
+GET http://localhost:8080/rest/restaurants
+Accept: */*
+Cache-Control: no-cache
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+POST http://localhost:8080/rest/restaurants
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "name": "New restaurant"
+}
+
+###
+
+PUT http://localhost:8080/rest/restaurants/1
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "name": "Updated name"
+}
+
+###
+
+DELETE http://localhost:8080/rest/restaurants/1
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+GET http://localhost:8080/rest/dishes
+Accept: */*
+Cache-Control: no-cache
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+POST http://localhost:8080/rest/dishes
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "name": "New dish",
+  "price": 1999
+}
+
+###
+
+GET http://localhost:8080/rest/restaurants/1/menu
+Accept: */*
+Cache-Control: no-cache
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+###
+
+PUT http://localhost:8080/rest/restaurants/1/menu
+Content-Type: application/json
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+{
+  "dishes": [
+    {
+      "id": "1"
+    },
+    {
+      "id": "3"
+    },
+    {
+      "id": "5"
+    }
+  ]
+}
+
+###
