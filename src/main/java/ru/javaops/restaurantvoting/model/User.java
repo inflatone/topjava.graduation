@@ -16,16 +16,18 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(name = User.UNIQUE_EMAIL_INDEX, columnNames = {"email"}))
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity implements Serializable {
+    public static final String UNIQUE_EMAIL_INDEX = "user_unique_name_idx";
+
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     @Email
     @NotEmpty
     @Size(max = 128)

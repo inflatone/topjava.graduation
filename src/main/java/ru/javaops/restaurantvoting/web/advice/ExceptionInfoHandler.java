@@ -1,8 +1,7 @@
-package ru.javaops.restaurantvoting.web;
+package ru.javaops.restaurantvoting.web.advice;
 
 import one.util.streamex.StreamEx;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -11,13 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.javaops.restaurantvoting.util.ValidationUtil;
 import ru.javaops.restaurantvoting.util.exception.NotFoundException;
 
-import javax.lang.model.type.ErrorType;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-import java.util.Optional;
 
 @RestControllerAdvice(annotations = RestController.class)
 public class ExceptionInfoHandler {

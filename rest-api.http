@@ -52,8 +52,8 @@ Authorization: Basic admin@javaops.ru admin
   "lastName": "Test",
   "password": "test",
   "roles": [
-    "ROLE_USER",
-    "ROLE_ADMIN"
+    "USER",
+    "ADMIN"
   ]
 }
 
@@ -136,7 +136,17 @@ Authorization: Basic admin@javaops.ru admin
 
 ###
 
-GET http://localhost:8080/rest/restaurants/1/menu
+PUT http://localhost:8080/rest/dishes/6/restaurant
+Content-Type: text/uri-list
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+http://localhost:8080/rest/restaurants/1
+
+###
+
+GET http://localhost:8080/rest/restaurants/1/dailyMenus
 Accept: */*
 Cache-Control: no-cache
 #Authorization: Basic user@gmail.com 123
@@ -145,24 +155,32 @@ Authorization: Basic admin@javaops.ru admin
 
 ###
 
-PUT http://localhost:8080/rest/restaurants/1/menu
+POST http://localhost:8080/rest/dailyMenus
 Content-Type: application/json
 #Authorization: Basic user@gmail.com 123
 #Authorization: Basic user@gmail.com password
 Authorization: Basic admin@javaops.ru admin
 
 {
+  "restaurant": "http://localhost:8080/rest/restaurant/1",
   "dishes": [
-    {
-      "id": "1"
-    },
-    {
-      "id": "3"
-    },
-    {
-      "id": "5"
-    }
+    "http://localhost:8080/rest/dishes/1",
+    "http://localhost:8080/rest/dishes/3"
   ]
 }
 
 ###
+
+###
+
+PUT http://localhost:8080/rest/restaurant/1/dishes/
+Content-Type: text/uri-list
+#Authorization: Basic user@gmail.com 123
+#Authorization: Basic user@gmail.com password
+Authorization: Basic admin@javaops.ru admin
+
+http://localhost:8080/rest/restaurants/1
+
+
+###
+

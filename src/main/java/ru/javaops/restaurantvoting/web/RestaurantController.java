@@ -3,6 +3,7 @@ package ru.javaops.restaurantvoting.web;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.restaurantvoting.model.DailyMenu;
 import ru.javaops.restaurantvoting.model.Restaurant;
@@ -29,9 +30,16 @@ public class RestaurantController {
         return restaurantMenu.orElseThrow(() -> new NotFoundException("Today's menu is not present yet"));
     }
 
+    @Transactional
     @PutMapping("/{id}/menu")
     @ResponseStatus(HttpStatus.CREATED)
     public DailyMenu setMenu(@PathVariable int id, @Valid @RequestBody DailyMenu menu) {
+        Optional<DailyMenu> optionalRestaurantMenu = dailyMenuRepository.findDailyMenuByDateAndRestaurantId(LocalDate.now(), id);
+        if (optionalRestaurantMenu.isPresent()) {
+            DailyMenu persistedMenu = optionalRestaurantMenu.get();
+            persistedMenu.setDishes(menu.getDishes());
+            return persistedMenu;
+        }
         menu.setRestaurant(new Restaurant(id));
         return dailyMenuRepository.save(menu);
     }

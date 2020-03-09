@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-@RepositoryRestResource(path = "menus")
+@RepositoryRestResource(path = "dailyMenus")
 public interface DailyMenuRepository extends JpaRepository<DailyMenu, Integer> {
 
     @RestResource(rel = "by-date", path="by-date")

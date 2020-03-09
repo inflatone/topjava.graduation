@@ -28,6 +28,9 @@ spring:
     password:
   h2.console.enabled: true
 
+  jackson:
+    default-property-inclusion: NON_EMPTY
+
   data.rest:
     #  https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.basic-settings
     basePath: /rest
