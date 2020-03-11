@@ -3,6 +3,7 @@ package ru.javaops.restaurantvoting.model;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,11 +23,12 @@ public class DailyMenu extends BaseEntity {
     @Column(name = "date", columnDefinition = "DATE DEFAULT CURRENT_DATE", insertable = false, updatable = false)
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
+    @RestResource(path = "dishes", rel = "dishes")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "daily_menu_dishes", joinColumns = @JoinColumn(name = "daily_menu_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id"))

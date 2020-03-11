@@ -1,46 +1,50 @@
 package ru.javaops.restaurantvoting.web;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import one.util.streamex.StreamEx;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.RepresentationModelProcessor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.restaurantvoting.model.DailyMenu;
 import ru.javaops.restaurantvoting.model.Restaurant;
 import ru.javaops.restaurantvoting.repository.DailyMenuRepository;
 import ru.javaops.restaurantvoting.repository.RestaurantRepository;
-import ru.javaops.restaurantvoting.util.exception.NotFoundException;
+import ru.javaops.restaurantvoting.to.RestaurantTo;
+import ru.javaops.restaurantvoting.web.converter.ToConverter;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-@RestController
-@RequestMapping("/rest/restaurants")
 @RequiredArgsConstructor
-@Slf4j
-public class RestaurantController {
-    private final RestaurantRepository repository;
+@RepositoryRestController
+public class RestaurantController implements RepresentationModelProcessor<CollectionModel<Restaurant>> { // https://stackoverflow.com/a/24791083/10375242
+    private final RestaurantRepository restaurantRepository;
 
     private final DailyMenuRepository dailyMenuRepository;
 
-    @GetMapping("/{id}/menu")
-    public DailyMenu get(@PathVariable int id) {
-        Optional<DailyMenu> restaurantMenu = dailyMenuRepository.findDailyMenuByDateAndRestaurantId(LocalDate.now(), id);
-        return restaurantMenu.orElseThrow(() -> new NotFoundException("Today's menu is not present yet"));
+    private final ToConverter toConverter;
+
+    @ResponseBody
+    @GetMapping(value = RestaurantRepository.URL + "/withMenu", produces = MediaTypes.HAL_JSON_VALUE)
+    public List<RestaurantTo> withMenus() {
+        Map<Integer, DailyMenu> menuMap = StreamEx.of(dailyMenuRepository.findDailyMenuByDate(LocalDate.now()))
+                .toMap(dm -> dm.getRestaurant().getId(), Function.identity());
+        return StreamEx.of(restaurantRepository.findAll())
+                .map(r -> toConverter.createRestaurantTo(r, menuMap.get(r.getId())))
+                .toList();
     }
 
-    @Transactional
-    @PutMapping("/{id}/menu")
-    @ResponseStatus(HttpStatus.CREATED)
-    public DailyMenu setMenu(@PathVariable int id, @Valid @RequestBody DailyMenu menu) {
-        Optional<DailyMenu> optionalRestaurantMenu = dailyMenuRepository.findDailyMenuByDateAndRestaurantId(LocalDate.now(), id);
-        if (optionalRestaurantMenu.isPresent()) {
-            DailyMenu persistedMenu = optionalRestaurantMenu.get();
-            persistedMenu.setDishes(menu.getDishes());
-            return persistedMenu;
-        }
-        menu.setRestaurant(new Restaurant(id));
-        return dailyMenuRepository.save(menu);
+    @Override
+    public CollectionModel<Restaurant> process(CollectionModel<Restaurant> model) {
+        // https://github.com/spring-projects/spring-hateoas/issues/434#issuecomment-411770759
+        model.add(new Link(ServletUriComponentsBuilder.fromCurrentRequest().path("/withMenu").build().toUriString(), "withMenu"));
+        return model;
     }
 }

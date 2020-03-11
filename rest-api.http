@@ -131,7 +131,8 @@ Authorization: Basic admin@javaops.ru admin
 
 {
   "name": "New dish",
-  "price": 1999
+  "price": 1999,
+  "restaurant": "http://localhost:8080/rest/restaurant/1"
 }
 
 ###
@@ -154,7 +155,7 @@ Cache-Control: no-cache
 Authorization: Basic admin@javaops.ru admin
 
 ###
-
+#Set today menu (bind restaurant resource and a sequence of dish resources
 POST http://localhost:8080/rest/dailyMenus
 Content-Type: application/json
 #Authorization: Basic user@gmail.com 123
@@ -165,22 +166,16 @@ Authorization: Basic admin@javaops.ru admin
   "restaurant": "http://localhost:8080/rest/restaurant/1",
   "dishes": [
     "http://localhost:8080/rest/dishes/1",
-    "http://localhost:8080/rest/dishes/3"
+    "http://localhost:8080/rest/dishes/3",
+    "http://localhost:8080/rest/dishes/4"
   ]
 }
 
 ###
 
-###
-
-PUT http://localhost:8080/rest/restaurant/1/dishes/
-Content-Type: text/uri-list
+DELETE http://localhost:8080/rest/dailyMenus/7
 #Authorization: Basic user@gmail.com 123
 #Authorization: Basic user@gmail.com password
 Authorization: Basic admin@javaops.ru admin
 
-http://localhost:8080/rest/restaurants/1
-
-
 ###
-

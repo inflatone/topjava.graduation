@@ -30,9 +30,5 @@ public class Restaurant extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @RestResource(path = "dishes", rel = "dishes")
-    private List<Dish> dishes;
-
-    public Restaurant(Integer id) {
-        super(id);
-    }
+    private List<Dish> allDishes;
 }

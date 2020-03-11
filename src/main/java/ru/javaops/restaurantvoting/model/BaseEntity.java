@@ -1,7 +1,7 @@
 package ru.javaops.restaurantvoting.model;
 
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;

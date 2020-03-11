@@ -9,8 +9,9 @@ import ru.javaops.restaurantvoting.model.Restaurant;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-@RepositoryRestResource(path = "restaurants")
+@RepositoryRestResource(path = RestaurantRepository.URL)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
+    String URL = "restaurants";
 
     @RestResource(rel = "by-name", path = "by-name")
     Optional<Restaurant> findByNameIgnoreCase(String name);
