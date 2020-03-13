@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.CollectionModel;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuTo extends BaseTo {
+    private RestaurantTo restaurant;
+
     private LocalDate date;
 
-    private List<DishTo> dishes;
+    private Iterable<DishTo> dishes;
 }

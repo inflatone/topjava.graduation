@@ -16,6 +16,6 @@ import java.util.List;
 public interface DailyMenuRepository extends JpaRepository<DailyMenu, Integer> {
 
     @RestResource(rel = "by-date", path = "by-date")
-    @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.FETCH)
     List<DailyMenu> findDailyMenuByDate(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }
