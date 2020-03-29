@@ -6,6 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.ProjectionDefinitionConfiguration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
+import ru.javaops.restaurantvoting.repository.projection.DailyMenuContentIncludedProjection;
 
 import java.sql.SQLException;
 
@@ -26,5 +30,14 @@ public class AppConfig {
     @Bean
     protected Module hibernateJacksonModule() {
         return new Hibernate5Module();
+    }
+
+    @Configuration
+    public static class CustomRepositoryRestMvcConfiguration implements RepositoryRestConfigurer {
+        @Override
+        public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+            ProjectionDefinitionConfiguration projections = config.getProjectionConfiguration();
+            projections.addProjection(DailyMenuContentIncludedProjection.class);
+        }
     }
 }

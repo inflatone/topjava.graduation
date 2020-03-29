@@ -9,7 +9,7 @@ import ru.javaops.restaurantvoting.model.Restaurant;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-@RepositoryRestResource(path = RestaurantRepository.URL)
+@RepositoryRestResource(path = RestaurantRepository.URL/*, excerptProjection = RestaurantDefaultProjection.class*/)
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     String URL = "restaurants";
 

@@ -12,10 +12,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Transactional(readOnly = true)
-@RepositoryRestResource(path = "dailyMenus")
+@RepositoryRestResource(path = DailyMenuRepository.URL)
 public interface DailyMenuRepository extends JpaRepository<DailyMenu, Integer> {
+    String URL = "lunches";
 
-    @RestResource(rel = "by-date", path = "by-date")
+    String BY_DATE_PATH = "by-date";
+
+    @RestResource(rel = "by-date", path = BY_DATE_PATH)
     @EntityGraph(attributePaths = {"restaurant", "dishes"}, type = EntityGraph.EntityGraphType.FETCH)
-    List<DailyMenu> findDailyMenuByDate(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
+    List<DailyMenu> findLunchesByDate(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date);
 }
