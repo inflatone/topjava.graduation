@@ -26,7 +26,7 @@ public class Restaurant extends BaseEntity {
     @OrderBy("date DESC")
     @RestResource(path = "history", rel = "history")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    private List<DailyMenu> history;
+    private List<Lunch> history;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @RestResource(path = "dishes", rel = "dishes")

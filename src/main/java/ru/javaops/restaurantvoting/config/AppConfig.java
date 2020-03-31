@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.ProjectionDefinitionConfiguration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
-import ru.javaops.restaurantvoting.repository.projection.DailyMenuContentIncludedProjection;
+import ru.javaops.restaurantvoting.repository.projection.LunchWithDetailsProjection;
 
 import java.sql.SQLException;
 
@@ -37,7 +37,7 @@ public class AppConfig {
         @Override
         public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
             ProjectionDefinitionConfiguration projections = config.getProjectionConfiguration();
-            projections.addProjection(DailyMenuContentIncludedProjection.class);
+            projections.addProjection(LunchWithDetailsProjection.class);
         }
     }
 }

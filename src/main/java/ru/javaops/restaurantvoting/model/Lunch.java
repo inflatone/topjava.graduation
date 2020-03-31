@@ -9,15 +9,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "daily_menu", uniqueConstraints =
-        {@UniqueConstraint(name = DailyMenu.UNIQUE_RESTAURANT_DATE_INDEX, columnNames = {"restaurant_id", "date"})})
+@Table(name = "lunch", uniqueConstraints =
+        {@UniqueConstraint(name = Lunch.UNIQUE_RESTAURANT_DATE_INDEX, columnNames = {"restaurant_id", "date"})})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
-public class DailyMenu extends BaseEntity {
-    public static final String UNIQUE_RESTAURANT_DATE_INDEX = "daily_menu_unique_restaurant_date_idx";
+public class Lunch extends BaseEntity {
+    public static final String UNIQUE_RESTAURANT_DATE_INDEX = "lunch_unique_restaurant_date_idx";
 
     @Column(name = "date", columnDefinition = "DATE DEFAULT CURRENT_DATE", insertable = false, updatable = false)
     private LocalDate date;
@@ -29,7 +29,7 @@ public class DailyMenu extends BaseEntity {
 
     //    @RestResource(path = "dishes", rel = "dishes")
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "daily_menu_dishes", joinColumns = @JoinColumn(name = "daily_menu_id"),
+    @JoinTable(name = "lunch_dishes", joinColumns = @JoinColumn(name = "lunch_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id"))
     private List<Dish> dishes;
 

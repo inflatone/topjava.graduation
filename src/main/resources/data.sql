@@ -24,17 +24,17 @@ VALUES (1, 'Curry Udon', 1999, 1),
        (9, 'Eel from the Oosterschelde', 4999, 3),
        (10, 'Steamed fresh flower crab with aged Chinese wine', 3290, 3);
 
-INSERT INTO DAILY_MENU (ID, DATE, RESTAURANT_ID)
-VALUES (1, '2020-04-01', 1),
-       (2, '2020-04-01', 2),
-       (3, '2020-04-01', 3),
-       (4, '2020-04-02', 1),
-       (5, '2020-04-02', 2),
-       (6, '2020-04-02', 3),
-       (7, DEFAULT, 1),
-       (8, DEFAULT, 2),
-       (9, DEFAULT, 3);
-INSERT INTO DAILY_MENU_DISHES (DAILY_MENU_ID, DISH_ID)
+INSERT INTO LUNCH (ID, DATE, RESTAURANT_ID)
+VALUES (1, DATEADD(DAY, -2, CURRENT_DATE), 1),
+       (2, DATEADD(DAY, -2, CURRENT_DATE), 2),
+       (3, DATEADD(DAY, -2, CURRENT_DATE), 3),
+       (4, DATEADD(DAY, -1, CURRENT_DATE), 1),
+       (5, DATEADD(DAY, -1, CURRENT_DATE), 2),
+       (6, DATEADD(DAY, -1, CURRENT_DATE), 3),
+       (7, CURRENT_DATE, 1),
+       (8, CURRENT_DATE, 2),
+       (9, CURRENT_DATE, 3);
+INSERT INTO LUNCH_DISHES (LUNCH_ID, DISH_ID)
 VALUES (1, 1),
        (1, 3),
        (1, 4),

@@ -1,13 +1,13 @@
 package ru.javaops.restaurantvoting.repository.projection;
 
 import org.springframework.data.rest.core.config.Projection;
-import ru.javaops.restaurantvoting.model.DailyMenu;
+import ru.javaops.restaurantvoting.model.Lunch;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Projection(name = DailyMenuContentIncludedProjection.CONTENT_INCL_PROJECTION_NAME, types = DailyMenu.class)
-public interface DailyMenuContentIncludedProjection {
+@Projection(name = LunchWithDetailsProjection.CONTENT_INCL_PROJECTION_NAME, types = Lunch.class)
+public interface LunchWithDetailsProjection {
     String CONTENT_INCL_PROJECTION_NAME = "content-incl";
 
     LocalDate getDate();
