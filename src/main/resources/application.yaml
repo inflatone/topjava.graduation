@@ -14,7 +14,7 @@ spring:
         jdbc.batch_size: 20
   datasource:
     # ImMemory
-    url: jdbc:h2:mem:voting;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:voting
     #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
     # Absolute path
     #    url: jdbc:h2:C:/projects/bootjava/restorant-voting/db/voting
@@ -34,7 +34,10 @@ spring:
   data.rest:
     #  https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.basic-settings
     basePath: /rest
+    defaultPageSize: 20
     returnBodyOnCreate: true
+
+  mvc.date-format: yyyy-MM-dd
 
 logging:
   level:
