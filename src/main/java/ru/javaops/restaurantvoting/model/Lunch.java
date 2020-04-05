@@ -27,10 +27,6 @@ public class Lunch extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
-    //    @RestResource(path = "dishes", rel = "dishes")
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "lunch_dishes", joinColumns = @JoinColumn(name = "lunch_id"),
-            inverseJoinColumns = @JoinColumn(name = "dish_id"))
-    private List<Dish> dishes;
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "lunch")
+    private List<LunchDish> lunchDishes;
 }

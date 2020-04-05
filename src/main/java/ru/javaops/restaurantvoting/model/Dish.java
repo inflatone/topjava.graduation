@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +24,11 @@ public class Dish extends BaseEntity {
     @Size(max = 128)
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "description")
+    @Size(max = 5000)
+    @Nullable
+    private String description;
 
     @NotNull
     @Range(min = 0, max = 5000)

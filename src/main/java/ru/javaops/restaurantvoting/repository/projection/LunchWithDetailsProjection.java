@@ -1,7 +1,10 @@
 package ru.javaops.restaurantvoting.repository.projection;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
+import ru.javaops.restaurantvoting.model.Dish;
 import ru.javaops.restaurantvoting.model.Lunch;
+import ru.javaops.restaurantvoting.model.LunchDish;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +17,8 @@ public interface LunchWithDetailsProjection {
 
     RestaurantDefaultProjection getRestaurant();
 
-    List<DishBasicProjection> getDishes();
+    @Value("#{target.lunchDishes}")
+    List<LunchDishBasicProjection> getLunchDishes();
 
     interface RestaurantDefaultProjection {
         String getName();
@@ -24,10 +28,14 @@ public interface LunchWithDetailsProjection {
 //    DailyMenu todayMenu();
     }
 
-    interface DishBasicProjection {
-        String getName();
+    interface LunchDishBasicProjection {
+        DishBasicProjection getDish();
 
-        Integer getPrice();
+        interface DishBasicProjection {
+            String getName();
+
+            Integer getPrice();
+        }
     }
 
 }

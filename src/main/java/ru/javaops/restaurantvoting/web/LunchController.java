@@ -1,6 +1,7 @@
 package ru.javaops.restaurantvoting.web;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
 import org.springframework.hateoas.MediaTypes;
@@ -24,11 +25,12 @@ public class LunchController {
     private final RepositoryEntityLinks links;
 
     @GetMapping(value = "/today", produces = MediaTypes.HAL_JSON_VALUE)
-    public View today() {
+    public View today(Pageable page) {
         URI url = links.linksToSearchResources(Lunch.class)
                 .getRequiredLink(LunchRepository.BY_DATE_PATH)
                 .getTemplate()
-                .expand(LocalDate.now(), LunchWithDetailsProjection.CONTENT_INCL_PROJECTION_NAME);
+                .expand(LocalDate.now(), page.getPageNumber(), page.getPageSize(), page.getSort(),
+                        LunchWithDetailsProjection.CONTENT_INCL_PROJECTION_NAME);
         return new InternalResourceView(url.getPath() + '?' + url.getQuery());
     }
 }
