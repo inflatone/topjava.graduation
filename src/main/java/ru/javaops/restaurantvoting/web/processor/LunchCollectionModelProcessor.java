@@ -16,7 +16,7 @@ public class LunchCollectionModelProcessor implements RepresentationModelProcess
     @Override
     public CollectionModel<Lunch> process(CollectionModel<Lunch> model) {
         // resource.add(new Link(linkTo(VoteController.class).toString() + "{?page,size,sort}").withRel("votes"));
-        model.add(new Link(linkTo(methodOn(LunchController.class).today(Pageable.unpaged())).toString() + "{?page,size,sort}").withRel("today"));
+        model.add(new Link(linkTo(methodOn(LunchController.class).today(Pageable.unpaged(), null)).toString() + "{?page,size,sort}").withRel("today"));
         return model;
     }
 }

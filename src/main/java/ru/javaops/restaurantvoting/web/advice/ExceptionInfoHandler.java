@@ -31,4 +31,10 @@ public class ExceptionInfoHandler {
         return Map.of("message", "There're validation errors",
                 "details", errors);
     }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY) // 422
+    @ExceptionHandler(IllegalStateException.class)
+    public Map<String, Object> illegalStateError(IllegalStateException ex) {
+        return Map.of("message", ex.getMessage());
+    }
 }

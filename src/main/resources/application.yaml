@@ -33,7 +33,7 @@ spring:
 
   data.rest:
     #  https://docs.spring.io/spring-data/rest/docs/current/reference/html/#getting-started.basic-settings
-    basePath: /rest
+#    basePath: /rest
     defaultPageSize: 20
     returnBodyOnCreate: true
 
@@ -44,3 +44,7 @@ logging:
     root: WARN
     ru.javaops.bootjava: DEBUG
     org.springframework.security: DEBUG
+
+server:
+  servlet:
+    context-path: /rest

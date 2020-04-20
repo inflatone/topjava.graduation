@@ -13,6 +13,7 @@ import ru.javaops.restaurantvoting.model.Lunch;
 import ru.javaops.restaurantvoting.repository.LunchRepository;
 import ru.javaops.restaurantvoting.repository.projection.LunchWithDetailsProjection;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.time.LocalDate;
 
@@ -20,17 +21,19 @@ import java.time.LocalDate;
 @RepositoryRestController
 @RequestMapping(LunchController.URL)
 public class LunchController {
-    public static final String URL = "/rest/" + LunchRepository.URL;
+    public static final String URL = '/' + LunchRepository.URL;
 
     private final RepositoryEntityLinks links;
 
     @GetMapping(value = "/today", produces = MediaTypes.HAL_JSON_VALUE)
-    public View today(Pageable page) {
+    public View today(Pageable page, HttpServletRequest request) {
         URI url = links.linksToSearchResources(Lunch.class)
                 .getRequiredLink(LunchRepository.BY_DATE_PATH)
                 .getTemplate()
                 .expand(LocalDate.now(), page.getPageNumber(), page.getPageSize(), page.getSort(),
                         LunchWithDetailsProjection.CONTENT_INCL_PROJECTION_NAME);
-        return new InternalResourceView(url.getPath() + '?' + url.getQuery());
+        URI relativizedURI = URI.create(request.getContextPath())
+                .relativize(URI.create(url.getPath() + '?' + url.getQuery()));
+        return new InternalResourceView('/' + relativizedURI.toString());
     }
 }

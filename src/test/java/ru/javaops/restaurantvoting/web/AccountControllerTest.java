@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import ru.javaops.restaurantvoting.AbstractControllerTest;
 import ru.javaops.restaurantvoting.model.User;
 import ru.javaops.restaurantvoting.repository.UserRepository;
@@ -22,6 +23,9 @@ class AccountControllerTest extends AbstractControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WebApplicationContext context;
+
     @Test
     void register() throws Exception {
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
@@ -32,7 +36,7 @@ class AccountControllerTest extends AbstractControllerTest {
         User expected = findLastAddedUser();
         resultActions
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost/rest/account"))
+                .andExpect(header().string(HttpHeaders.LOCATION, "http://localhost/account"))
                 .andExpect(jsonPath("$.email", is(expected.getEmail())))
                 .andExpect(jsonPath("$.firstName", is(expected.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(expected.getLastName())));

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.javaops.restaurantvoting.model.Lunch;
 import ru.javaops.restaurantvoting.model.Restaurant;
 import ru.javaops.restaurantvoting.model.User;
+import ru.javaops.restaurantvoting.model.Vote;
 import ru.javaops.restaurantvoting.util.ValidationUtil;
 
 import java.util.Map;
@@ -19,11 +20,13 @@ public class RestRepositoryErrorHandler {
     public static final Map.Entry<String, String> EXCEPTION_DUPLICATE_USER_EMAIL = Map.entry("email", "User with this email already exists");
     public static final Map.Entry<String, String> EXCEPTION_DUPLICATE_RESTAURANT_NAME = Map.entry("name", "Restaurant with this email already exists");
     public static final Map.Entry<String, String> EXCEPTION_DUPLICATE_LUNCH = Map.entry("restaurant", "Restaurant has already provided today's lunch");
+    public static final Map.Entry<String, String> EXCEPTION_DUPLICATE_VOTE = Map.entry("vote", "You've already voted today");
 
     private static final Map<String, Map.Entry<String, String>> CONSTRAINS_I18N_MAP = Map.of(
             User.UNIQUE_EMAIL_INDEX, EXCEPTION_DUPLICATE_USER_EMAIL,
             Restaurant.UNIQUE_NAME_INDEX, EXCEPTION_DUPLICATE_RESTAURANT_NAME,
-            Lunch.UNIQUE_RESTAURANT_DATE_INDEX, EXCEPTION_DUPLICATE_LUNCH
+            Lunch.UNIQUE_RESTAURANT_DATE_INDEX, EXCEPTION_DUPLICATE_LUNCH,
+            Vote.UNIQUE_RESTAURANT_DATE_INDEX, EXCEPTION_DUPLICATE_VOTE
     );
 
     @ResponseStatus(HttpStatus.CONFLICT) // 409
