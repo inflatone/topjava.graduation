@@ -2,6 +2,7 @@ package ru.javaops.restaurantvoting.web.advice;
 
 import one.util.streamex.StreamEx;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -14,7 +15,7 @@ import ru.javaops.restaurantvoting.util.exception.NotFoundException;
 
 import java.util.Map;
 
-@RestControllerAdvice(annotations = RestController.class)
+@RestControllerAdvice(annotations = {RestController.class, RepositoryRestController.class})
 public class ExceptionInfoHandler {
     @ExceptionHandler(NotFoundException.class)
     public Map<String, Object> applicationError(NotFoundException e) {

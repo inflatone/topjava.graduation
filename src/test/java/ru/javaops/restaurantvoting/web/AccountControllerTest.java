@@ -8,7 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import ru.javaops.restaurantvoting.AbstractControllerTest;
 import ru.javaops.restaurantvoting.model.User;
 import ru.javaops.restaurantvoting.repository.UserRepository;
@@ -18,13 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 class AccountControllerTest extends AbstractControllerTest {
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private WebApplicationContext context;
 
     @Test
     void register() throws Exception {

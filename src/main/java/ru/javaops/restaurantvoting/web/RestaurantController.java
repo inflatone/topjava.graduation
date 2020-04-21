@@ -30,7 +30,7 @@ import java.util.Optional;
 public class RestaurantController {
     public static final String URL = '/' + RestaurantRepository.URL;
 
-    private static final LocalTime VOTE_AGAIN_TIME_LIMIT = LocalTime.of(11, 0);
+    public static final LocalTime VOTE_AGAIN_TIME_LIMIT = LocalTime.of(11, 0);
 
     private final VoteRepository voteRepository;
 

@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/lunches/today").permitAll()
                 .antMatchers("/account/register").anonymous()
                 .antMatchers("/account").hasRole(Role.USER.name())
+                .antMatchers("/restaurants/**/votes").hasRole(Role.USER.name())
                 .antMatchers("/**").hasRole(Role.ADMIN.name())
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

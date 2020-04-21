@@ -23,6 +23,7 @@ before_install:
 install: true
 
 after_success:
+  - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
   - bash <(curl -s https://codecov.io/bash)
 
 # https://docs.travis-ci.com/user/notifications#Configuring-email-notifications
