@@ -32,7 +32,7 @@ public class VoteModelProcessor implements RepresentationModelProcessor<EntityMo
         return model;
     }
 
-    public WebMvcLinkBuilder getLinkToCurrent() {
+    public static WebMvcLinkBuilder getLinkToCurrent() {
         return linkTo(methodOn(VoteController.class).today(null));
     }
 }

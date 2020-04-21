@@ -3,7 +3,6 @@ package ru.javaops.restaurantvoting.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -24,6 +23,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import static ru.javaops.restaurantvoting.web.processor.VoteModelProcessor.getLinkToCurrent;
+
 @RequiredArgsConstructor
 @RepositoryRestController
 @RequestMapping(RestaurantController.URL)
@@ -38,7 +39,7 @@ public class RestaurantController {
 
     @Transactional
     @PostMapping(value = "{id}/votes", produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<PersistentEntityResource> postVote(@PathVariable int id, PersistentEntityResourceAssembler assembler) {
+    public ResponseEntity<EntityModel<Vote>> postVote(@PathVariable int id, PersistentEntityResourceAssembler assembler) {
         Restaurant restaurant = restaurantRepository.getOne(id);
 
         // @AuthenticationPrincipal not working with @RepositoryRestController
@@ -52,9 +53,11 @@ public class RestaurantController {
             v.setRestaurant(restaurant);
             return v;
         }).orElseGet(() -> new Vote(auth.getUser(), restaurant, LocalDate.now()));
-        PersistentEntityResource persisted = assembler.toFullResource(voteRepository.save(vote));
-        return (vote.isNew() ? ResponseEntity.created(persisted.getLink("self").get().toUri()) : ResponseEntity.ok())
-                .body(persisted);
+        var persisted = new EntityModel<>(voteRepository.save(vote));
+
+
+        return (vote.isNew() ? ResponseEntity.created(getLinkToCurrent().toUri())
+                : ResponseEntity.ok()).body(persisted);
     }
 
     /**
